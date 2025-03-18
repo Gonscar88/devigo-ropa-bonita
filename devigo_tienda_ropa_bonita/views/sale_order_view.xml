@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Añadir botón en la vista de formulario de ventas -->
+    <record id="view_sale_order_form_inherit_tienda_ropa" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.tienda.ropa</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="total_pagado"/>
+                <field name="total_adeudado"/>
+                <field name="porcentaje_comision"/>
+                <field name="monto_comision"/>
+                <field name="comision_pagada"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(action_tienda_ropa_pagos_wizard)d" 
+                        string="Registrar Pago" 
+                        icon="fa-money"
+                        type="action" 
+                        invisible="state not in ['sale', 'done']" 
+                        class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Pagos" name="pagos">
+                    <field name="pagos_ids" widget="one2many_list" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+ 
+    <record model="ir.ui.view" id="view_sale_order_tree_view">
+        <field name="name">sale.order.form.inherit.tienda.ropa</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="total_pagado" optional="hide" sum="Total pagado" widget="monetary"/>
+                <field name="total_adeudado" optional="hide" sum="Total adeudado" widget="monetary"/>
+                <field name="porcentaje_comision" optional="hide"/>
+                <field name="monto_comision" optional="hide" sum="Monto de comisión" widget="monetary"/>
+                <field name="comision_pagada" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Definición del Wizard para Pagos de Ventas -->
+        <record id="view_tienda_ropa_pagos_wizard_form" model="ir.ui.view">
+            <field name="name">tienda_ropa.pagos.wizard.form</field>
+            <field name="model">tienda_ropa.pagos</field>
+            <field name="arch" type="xml">
+                <form string="Registrar Pago">
+                    <sheet>
+                        <group>
+                            <field name="fecha_pago" required="1"/>
+                            <field name="monto" required="1"/>
+                            <field name="venta_id" invisible="1"/>
+                            <field name="notas"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_confirm_payment" string="Confirmar" type="object" class="btn-primary"/>
+                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+       <!-- Acción para abrir el wizard -->
+        <record id="action_tienda_ropa_pagos_wizard" model="ir.actions.act_window">
+            <field name="name">Registrar Pago</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tienda_ropa.pagos</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">form</field>
+        </record>
+
+    </data>
+</odoo>
