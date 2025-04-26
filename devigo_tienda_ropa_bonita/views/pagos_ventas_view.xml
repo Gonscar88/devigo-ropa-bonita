@@ -6,12 +6,13 @@
             <field name="model">tienda_ropa.pagos</field>
             <field name="arch" type="xml">
                 <tree string="Pagos de Ventas">
-                    <field name="create_uid"/>
+                    <field name="create_uid" string="Creado por"/>
                     <field name="fecha_pago"/>
                     <field name="monto"/>
                     <field name="venta_id"/>
+                    <field name="pago_recibido"/>
                     <field name="notas"/>
-                    <field name="create_date" optional="hide"/>
+                    <field name="create_date" optional="hide" string="Fecha de creación"/>
                 </tree>
             </field>
         </record>
@@ -27,6 +28,7 @@
                             <field name="fecha_pago"/>
                             <field name="monto"/>
                             <field name="venta_id"/>
+                            <field name="pago_recibido"/>
                             <field name="notas"/>
                         </group>
                     </sheet>
@@ -42,6 +44,7 @@
                     <field name="fecha_pago"/>
                     <field name="monto"/>
                     <field name="venta_id"/>
+                    <field name="pago_recibido"/>
                 </search>
             </field>
         </record>
@@ -53,7 +56,7 @@
             <field name="domain">[]</field>
         </record>
 
-        <menuitem id="menu_pagos_ventas" name="Pagos de Ventas" 
+        <menuitem id="menu_pagos_ventas" name="Pagos de Ventas" action="action_pagos_ventas"
             parent="sale.sale_order_menu" />
 
     </data>

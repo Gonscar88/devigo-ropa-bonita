@@ -23,6 +23,10 @@ class PagosVentas(models.Model):
         string="Notas extra",
     )
 
+    pago_recibido = fields.Boolean(
+        "Pago recibido", help="El pago ya ha sido recibido por la administración"
+    )
+
     @api.model
     def default_get(self, fields_list):
         """Método para establecer valores por defecto cuando se abre desde una venta"""

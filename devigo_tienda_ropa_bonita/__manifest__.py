@@ -9,7 +9,8 @@
     "license": "LGPL-3",
     "depends": [
         'sale',
-        'sale_management'
+        'sale_management',
+        'sale_margin',
     ],
     "data": [
         'security/ir.model.access.csv',
