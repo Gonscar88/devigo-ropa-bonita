@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Heredamos la plantilla del documento de cotización/pedido -->
+    <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+        <!-- Añadimos la sección de pagos después de la sección de términos y condiciones -->
+        <xpath expr="//div[@name='so_total_summary']" position="after">
+            <t t-if="doc.pagos_ids">
+                <div class="mt-5 mb-3" id="estado_cuenta">
+                    <h3>Estado de Cuenta</h3>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <table class="table table-sm">
+                                <tr>
+                                    <td class="text-right"><strong>Total Pagado:</strong></td>
+                                    <td class="text-right">
+                                        <span t-field="doc.total_pagado" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right"><strong>Total Adeudado:</strong></td>
+                                    <td class="text-right">
+                                        <span t-field="doc.total_adeudado" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <h4 class="mt-4">Desglose de Pagos</h4>
+                    <table class="table table-sm o_main_table mt-3">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Fecha</th>
+                                <th class="text-right">Monto</th>
+                                <th class="text-left">Notas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.pagos_ids.sorted(key=lambda p: p.fecha_pago)" t-as="pago">
+                                <tr>
+                                    <td class="text-left">
+                                        <span t-field="pago.fecha_pago"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="pago.monto" t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                    </td>
+                                    <td class="text-left">
+                                        <span t-field="pago.notas"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

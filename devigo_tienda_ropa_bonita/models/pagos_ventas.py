@@ -27,6 +27,23 @@ class PagosVentas(models.Model):
         "Pago recibido", help="El pago ya ha sido recibido por la administración"
     )
 
+    cliente_id = fields.Many2one(
+        "res.partner",
+        string="Cliente",
+        related="venta_id.partner_id",
+        store=True,
+        readonly=True,
+    )
+
+    display_name = fields.Char(
+        compute="_compute_display_name",
+        string="Display Name",
+    )
+
+    def _compute_display_name(self):
+        for record in self:
+            record.display_name = f"Pago de {record.venta_id.name} en {record.fecha_pago} por {record.monto}"
+
     @api.model
     def default_get(self, fields_list):
         """Método para establecer valores por defecto cuando se abre desde una venta"""

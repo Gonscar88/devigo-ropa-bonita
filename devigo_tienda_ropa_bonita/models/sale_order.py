@@ -45,7 +45,19 @@ class SaleOrder(models.Model):
         default=False
     )
 
-    @api.depends('pagos_ids.monto')
+    costo_total = fields.Float(
+        string="Costo total",
+        compute='_compute_costo_total',
+        store=True,
+        group_operator="sum"
+    )
+
+    @api.depends('order_line.purchase_price')
+    def _compute_costo_total(self):
+        for record in self:
+            record.costo_total = sum(record.mapped('order_line').mapped('purchase_price'))
+
+    @api.depends('pagos_ids.monto', 'amount_total')
     def _compute_total_pagado(self):
         for record in self:
             record.total_pagado = sum(record.pagos_ids.mapped('monto'))
@@ -58,7 +70,6 @@ class SaleOrder(models.Model):
     @api.depends('porcentaje_comision')
     def _compute_monto_comision(self):
         for record in self:
-            record.monto_comision = ((record.margin * record.porcentaje_comision) / 100 ) \
-                if record.state in ['sale', 'done'] else 0 
+            record.monto_comision = ((record.margin * record.porcentaje_comision) / 100 )
     
     

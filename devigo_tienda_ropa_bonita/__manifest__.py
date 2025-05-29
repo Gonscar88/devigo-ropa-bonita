@@ -17,5 +17,6 @@
         'views/pagos_ventas_wizard.xml',
         'views/pagos_ventas_view.xml',
         'views/sale_order_view.xml',
+        'report/sale_report_templates.xml',
     ],
 }

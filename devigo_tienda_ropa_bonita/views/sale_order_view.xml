@@ -7,6 +7,7 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="costo_total"/>
                 <field name="total_pagado"/>
                 <field name="total_adeudado"/>
                 <field name="porcentaje_comision"/>
@@ -34,10 +35,15 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.sale_order_tree"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='margin']" position="attributes">
+                <attribute name="sum">Margen Total</attribute>
+                <attribute name="widget">monetary</attribute>
+            </xpath>
             <xpath expr="//field[@name='amount_total']" position="after">
-                <field name="total_pagado" optional="hide" sum="Total pagado" widget="monetary"/>
-                <field name="total_adeudado" optional="hide" sum="Total adeudado" widget="monetary"/>
-                <field name="porcentaje_comision" optional="hide"/>
+                <field name="costo_total" optional="hide" sum="Costo total" widget="monetary"/>
+                <field name="total_pagado" optional="show" sum="Total pagado" widget="monetary"/>
+                <field name="total_adeudado" optional="show" sum="Total adeudado" widget="monetary"/>
+                <field name="porcentaje_comision" optional="show"/>
                 <field name="monto_comision" optional="hide" sum="Monto de comisión" widget="monetary"/>
                 <field name="comision_pagada" optional="hide"/>
             </xpath>
